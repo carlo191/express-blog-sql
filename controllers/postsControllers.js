@@ -81,6 +81,17 @@ function update(req, res) {
 
 // Delete - Elimina un post tramite ID
 function destroy(req, res) {
+  // recuperiamo l'id dall' URL
+  const { id } = req.params;
+  //Eliminiamo la pizza dal menu
+  connection.query('DELETE FROM posts WHERE id = ?', [id], (err) => {
+  if (err) return res.status(500).json({ error: 'Failed to delete pizza' });
+  res.sendStatus(204)
+  });
+  }
+
+
+function destroy(req, res) {
   const id = parseInt(req.params.id);
   const post = postsData.find((post) => post.id === id);
 
