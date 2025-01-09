@@ -1,10 +1,18 @@
-postsData = require("../data/posts");
+// Importiamo il file di connessione al database
+const connection = require('../data/connection.js');
 
-// Index - Recupera la lista di tutti i post
-
+// Index
 function index(req, res) {
-  res.json(postsData);
+    // prepariamo la query
+    const sql = 'SELECT * FROM posts';
+    // eseguiamo la query!
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Database query failed' });
+        res.json(results);
+    });
 }
+
+
 
 // Show - Recupera i dettagli di un post specifico per ID
 function show(req, res) {
